@@ -34,4 +34,31 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: http://localhost:9000
-      
+  dast:
+    runs-on: ubuntu-latest
+    needs: sast  # DAST après SAST
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and start application
+        run: |
+          docker build -t my-app .
+          docker run -d -p 8080:8080 --name app my-app
+          sleep 10  # Attendre que l'app démarre
+
+      - name: OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.10.0
+        with:
+          target: 'http://localhost:8080'
+          rules_file_name: '.zap/rules.tsv'
+          cmd_options: '-I'
+
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zap-report
+          path: report_html.html
+
+      - name: Stop application
+        run: docker stop app
