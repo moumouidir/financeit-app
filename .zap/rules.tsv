@@ -1,0 +1,13 @@
+# .zap/rules.tsv
+# Format: ID    Action    Description
+10021    WARN    X-Content-Type-Options Header Missing
+10038    FAIL    Content Security Policy (CSP) Header Not Set
+10055    WARN    CSP: Wildcard Directive
+40012    FAIL    Cross Site Scripting (Reflected)
+40014    FAIL    Cross Site Scripting (Persistent)
+40018    FAIL    SQL Injection
+90033    FAIL    Loosely Scoped Cookie
+
+# FAIL = Échec du pipeline si détecté
+# WARN = Avertissement mais continue
+# IGNORE = Ignorer cette règle

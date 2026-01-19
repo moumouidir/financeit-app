@@ -25,7 +25,7 @@ jobs:
           SONAR_HOST_URL: http://localhost:9000  # À adapter selon votre config
         with:
           args: >
-            -Dsonar.projectKey=financeit-app
+            -Dsonar.projectKey=Financeit-app
             -Dsonar.python.version=3.11
 
       - name: SonarQube Quality Gate check
@@ -34,3 +34,4 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: http://localhost:9000
+      
